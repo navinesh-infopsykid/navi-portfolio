@@ -1,0 +1,70 @@
+@font-face {
+  font-family: "ClashGrotesk-Variable";
+  src: url("/fonts/ClashGrotesk-Variable.woff2") format("woff2");
+  font-weight: 200 700;
+  font-display: swap;
+  font-style: normal;
+}
+
+/* hero */
+.intro {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 1rem;
+    width: 100%;
+}
+.pill {
+    transition: all 0.3s;
+    border: 1px solid var(--input, #ddd);
+    background-color: var(--background, #000);
+    display: flex;
+    align-items: center;
+    font-size: 0.75rem;
+    padding: 0.375rem 0.625rem;
+    border-radius: 9999px;
+}
+.pill:hover {
+    transform: translateY(-0.25rem);
+    background-color: var(--primary, #7f00ff);
+    color: var(--primary-foreground, #fff);
+}
+.intro h1 {
+    padding-top: 0.5rem;
+    line-height: 1.2;
+}
+
+/* scroll down */
+.scroll {
+    transition: all 0.3s;
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.875rem;
+    color: #94a3b8;
+    gap: 0.25rem;
+}
+.scroll--hidden {
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+/* projects */
+.project-card {
+    padding: 3.5rem;
+    background-color: rgba(255,255,255,0.01);
+    border-radius: 0.5rem;
+}
+
+/* spline canvas */
+#canvas-container {
+    background-color: var(--background, #000);
+    border-radius: 1.875rem;
+    height: 515px;
+    min-width: 690px;
+    overflow: hidden;
+}

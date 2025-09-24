@@ -1,0 +1,13 @@
+/* Basic styles for Locomotive Scroll */
+[data-scroll-container] {
+  overflow: hidden;
+}
+
+[data-scroll-section] {
+  position: relative;
+}
+
+/* Add smooth scroll easing if needed */
+[data-scroll] {
+  will-change: transform;
+}

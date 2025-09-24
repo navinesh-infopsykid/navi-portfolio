@@ -1,0 +1,64 @@
+@import "./clash-grotesk.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: hsl(240, 27.9%, 5.7%);
+    --foreground: hsl(210, 40%, 98%);
+    --primary: hsl(237, 99%, 74%);
+    --primary-foreground: hsl(0,0%,0%);
+    --secondary: hsl(214, 98%, 74%);
+    --secondary-foreground: hsl(218,11%,65%);
+    --muted: hsl(217,32.6%,17.5%);
+    --muted-foreground: hsl(215,20.2%,65.1%);
+    --radius: 0.5rem;
+  }
+
+  html {
+    font-family: "ClashGrotesk-Variable", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    cursor: default;
+  }
+
+  section {
+    scroll-margin-top: 60px;
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .animate-blink {
+    animation: blink 1s infinite;
+  }
+
+  @keyframes blink {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+
+  /* scrollbar */
+  ::-webkit-scrollbar {
+    height: 2.5px;
+    width: 2px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--background);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--muted);
+  }
+  ::-webkit-scrollbar-thumb:active {
+    background: var(--primary);
+  }
+}
