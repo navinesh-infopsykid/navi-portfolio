@@ -45,7 +45,7 @@ useEffect(() => {
     <div className="app">
       {/* Navbar */}
       <nav className="navbar">
-        <h1 className="logo">Navinesh</h1>
+        <h1 className="logo">Navineshraj</h1>
         <ul className="nav-links">
           {["Home", "Projects", "Services", "Contact"].map((name, idx) => (
             <li key={name}>
