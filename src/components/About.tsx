@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import "./About.css";
 
+
 const About = () => {
   return (
     <section id="about" className="section about glass">
@@ -38,7 +39,7 @@ const About = () => {
           },
           {
             title: "🚀 Impact Driven",
-            text: "I care about solving real problems. Whether it’s optimizing workflows or improving usability, my goal is measurable impact."
+            text: "I care about solving real problems. Whether its optimizing workflows or improving usability, my goal is measurable impact."
           },
         ].map((item, i) => (
           <motion.div
