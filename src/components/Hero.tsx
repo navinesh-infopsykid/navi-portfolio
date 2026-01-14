@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import CatchStarGame from "./Cube3D";
+import CatchStarGame from "./StarGame";
 
 const Hero = () => {
   return (
@@ -59,7 +59,10 @@ const Hero = () => {
         </motion.div>
       </motion.div>
 
-     <CatchStarGame/>
+    <div className="hero-game">
+  <CatchStarGame />
+</div>
+
 
     </section>
   );

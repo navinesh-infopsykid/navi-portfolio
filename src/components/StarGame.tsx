@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import "./cube.css";
+import "./StarGame.css";
 
 const MESSAGES = [
   "You’re awesome!",

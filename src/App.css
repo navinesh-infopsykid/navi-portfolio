@@ -235,6 +235,10 @@ h2 {
   line-height: 1.1;
   margin-bottom: 20px;
 }
+.hero-game {
+  margin-top: 90px; /* ✅ NOW THIS WORKS */
+}
+
 
 .gradient-text {
   background: linear-gradient(135deg, #8b5cf6, #d946ef, #22d3ee);
