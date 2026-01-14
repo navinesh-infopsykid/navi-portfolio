@@ -1,0 +1,180 @@
+.projects-section {
+  padding: 100px 20px;
+  text-align: center;
+}
+
+.projects-section h2 {
+  font-size: 2.4rem;
+  margin-bottom: 60px;
+  letter-spacing: 1.5px;
+}
+
+/* ============================= */
+/* CAROUSEL */
+/* ============================= */
+.carousel-wrapper {
+  position: relative;
+  height: 460px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Card */
+.carousel-card {
+  position: absolute;
+  width: 340px;
+  height: 400px;
+  border-radius: 22px;
+  background: linear-gradient(
+    180deg,
+    rgba(28, 28, 45, 0.96),
+    rgba(14, 14, 28, 0.92)
+  );
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6);
+  cursor: grab;
+  overflow: hidden;
+  user-select: none;
+}
+
+.carousel-card:active {
+  cursor: grabbing;
+}
+
+/* Glow */
+.card-glow {
+  position: absolute;
+  inset: -50%;
+  background: radial-gradient(circle, #61dafb, transparent 65%);
+  filter: blur(100px);
+  opacity: 0.22;
+}
+
+/* Content */
+.card-content {
+  position: relative;
+  padding: 28px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-content h3 {
+  font-size: 1.35rem;
+  margin-bottom: 12px;
+}
+
+.card-content p {
+  font-size: 0.95rem;
+  opacity: 0.75;
+  line-height: 1.5;
+}
+
+/* Skills */
+.card-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.skill-chip {
+  padding: 7px 14px;
+  font-size: 0.75rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+}
+
+/* ============================= */
+/* RESPONSIVE (KEEP HORIZONTAL) */
+/* ============================= */
+@media (max-width: 900px) {
+  .carousel-wrapper {
+    height: 380px;
+  }
+
+  .carousel-card {
+    width: 280px;
+    height: 340px;
+  }
+}
+
+@media (max-width: 600px) {
+  .carousel-wrapper {
+    height: 320px;
+  }
+
+  .carousel-card {
+    width: 220px;
+    height: 280px;
+  }
+
+  .card-content {
+    padding: 20px;
+  }
+
+  .card-content h3 {
+    font-size: 1.1rem;
+  }
+
+  .card-content p {
+    font-size: 0.85rem;
+  }
+
+  .skill-chip {
+    font-size: 0.65rem;
+    padding: 6px 10px;
+  }
+}
+
+/* ============================= */
+/* NAV BUTTONS */
+/* ============================= */
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  font-size: 28px;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.nav-btn.left {
+  left: 12px;
+}
+
+.nav-btn.right {
+  right: 12px;
+}
+
+@media (max-width: 600px) {
+  .nav-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 22px;
+  }
+
+  .nav-btn.left {
+    left: 6px;
+  }
+
+  .nav-btn.right {
+    right: 6px;
+  }
+}

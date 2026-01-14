@@ -1,0 +1,135 @@
+.game-wrapper {
+  position: relative;
+  width: 300px;
+  height: 320px;
+  margin: auto;
+  padding-bottom: 20px;
+  border-radius: 16px;
+  background: #0b0b12;
+  z-index: 1;
+}
+
+/* FULL glowing border around all sides */
+.game-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: -4px; /* controls border thickness */
+  border-radius: 20px;
+  background: linear-gradient(
+    270deg,
+    #ff00ff,
+    #00ffff,
+    #00ff99,
+    #ffcc00,
+    #ff00ff
+  );
+  background-size: 400% 400%;
+  animation: glowRotate 6s linear infinite;
+  z-index: -1;
+  filter: blur(10px);
+}
+
+/* Optional soft outer glow */
+.game-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: 26px;
+  background: rgba(0, 255, 255, 0.35);
+  filter: blur(25px);
+  opacity: 0.8;
+  z-index: -2;
+}
+
+@keyframes glowRotate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.game-area {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle at top, #1e1b2e, #111);
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.star {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: radial-gradient(circle, #fff, #fcd34d);
+  border-radius: 50%;
+  box-shadow: 0 0 10px #fff;
+  transition: transform 0.2s;
+}
+
+.basket {
+  position: absolute;
+  bottom: 0;
+  width: 60px;
+  height: 16px;
+  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  border-radius: 8px;
+}
+
+.game-info {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+}
+
+.messages .msg {
+  font-size: 12px;
+  color: #fcd34d;
+  font-weight: 500;
+}
+
+.game-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px 18px;
+  font-size: 16px;
+  background: #7c3aed;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+
+
+.game-over {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  font-size: medium;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 60px;
+  align-items: center;
+  color: #fff;
+  border-radius: 16px;
+}
+/* Disable smoky cursor inside the game */
+[data-no-cursor] {
+  pointer-events: all; /* allow clicks */
+  cursor: none; /* hide default cursor so user uses basket */
+}
