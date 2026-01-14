@@ -1,17 +1,24 @@
 import { motion } from "framer-motion";
-import CatchStarGame from "./StarGame";
+import "./Hero.css"
 
 const Hero = () => {
   return (
-    <section id="home" className="hero section">
+    <section id="home" className="hero">
+      {/* Background Orbs */}
+      <div className="hero-bg">
+        <span className="orb orb-1"></span>
+        <span className="orb orb-2"></span>
+        <span className="orb orb-3"></span>
+      </div>
+
       <motion.div
         className="hero-content"
-        initial={{ opacity: 0, y: 60 }}
+        initial={{ opacity: 0, y: 80 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: "easeOut" }}
       >
         <motion.h1
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
@@ -25,8 +32,8 @@ const Hero = () => {
         >
           Software Engineer crafting
           <span className="highlight"> clean</span>,
-          <span className="highlight"> scalable</span> & high-impact digital
-          experiences.
+          <span className="highlight"> scalable</span> & 
+          <span className="highlight"> high-impact</span> digital experiences.
         </motion.p>
 
         <motion.div
@@ -58,12 +65,6 @@ const Hero = () => {
           </button>
         </motion.div>
       </motion.div>
-
-    <div className="hero-game">
-  <CatchStarGame />
-</div>
-
-
     </section>
   );
 };

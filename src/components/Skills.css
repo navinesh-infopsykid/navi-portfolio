@@ -1,5 +1,5 @@
 /* ========================= */
-/* SKILLS SECTION - GENERAL */
+/* SECTION */
 /* ========================= */
 .section {
   padding: 90px 20px;
@@ -13,7 +13,6 @@
   margin-bottom: 60px;
   letter-spacing: 2px;
   font-weight: 600;
-  position: relative;
 }
 
 .section h2::after {
@@ -26,46 +25,51 @@
   border-radius: 2px;
 }
 
-/* ================================================= */
-/* DESKTOP — HORIZONTAL SKILLS TRAIN */
-/* ================================================= */
+/* ========================= */
+/* MARQUEE WRAPPER */
+/* ========================= */
 @media (min-width: 901px) {
-  .service-grid {
+  .skills-marquee {
     display: flex;
-    flex-wrap: nowrap;
-    gap: 30px;
-    overflow-x: auto;
-    padding: 30px 20px 40px;
-    perspective: 1400px;
-    scroll-behavior: smooth;
+    flex-direction: column;
+    gap: 40px;
+    overflow: hidden;
   }
 
-  /* hide scrollbar */
-  .service-grid::-webkit-scrollbar {
-    display: none;
+  .skills-track {
+    display: flex;
+    gap: 30px;
+    width: max-content;
+    will-change: transform;
   }
-  .service-grid {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+
+  .skills-track.left {
+    animation: marqueeLeft 45s linear infinite;
+  }
+
+  .skills-track.right {
+    animation: marqueeRight 45s linear infinite;
+  }
+
+  .skills-track:hover {
+    animation-play-state: paused;
   }
 }
 
-/* ================================================= */
+/* ========================= */
 /* SKILL CARD */
-/* ================================================= */
+/* ========================= */
 .skill-card {
-  width: 190px;               /* 🔑 FIX: width instead of flex-basis */
+  width: 190px;
   flex-shrink: 0;
   position: relative;
   padding: 32px 20px;
   border-radius: 20px;
-
   background: linear-gradient(
     180deg,
     rgba(25, 25, 40, 0.92),
     rgba(15, 15, 28, 0.88)
   );
-
   backdrop-filter: blur(12px);
   overflow: hidden;
   transform-style: preserve-3d;
@@ -74,100 +78,86 @@
     0 22px 45px rgba(0, 0, 0, 0.45),
     inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 
-  animation: floatCard 6s ease-in-out infinite;
   transition: transform 0.3s ease;
 }
 
-.skill-card:hover {
-  transform: scale(1.08);
-}
-
-/* ================================================= */
+/* ========================= */
 /* GLOW */
-/* ================================================= */
+/* ========================= */
 .skill-glow {
   position: absolute;
   inset: -70%;
   border-radius: 50%;
   filter: blur(80px);
   opacity: 0.18;
-  animation: glowPulse 7s ease-in-out infinite alternate;
   z-index: 0;
 }
 
-.skill-card:hover .skill-glow {
-  opacity: 0.4;
-}
-
-/* ================================================= */
+/* ========================= */
 /* ICON */
-/* ================================================= */
+/* ========================= */
 .skill-icon {
   font-size: 3rem;
   margin-bottom: 14px;
-  z-index: 1;
   position: relative;
+  z-index: 1;
 }
 
-/* ================================================= */
+/* ========================= */
 /* NAME */
-/* ================================================= */
+/* ========================= */
 .skill-card h3 {
   font-size: 0.95rem;
   letter-spacing: 1.2px;
   opacity: 0.95;
-  text-align: center;
   position: relative;
   z-index: 1;
 }
 
-/* ================================================= */
-/* ANIMATIONS */
-/* ================================================= */
-@keyframes glowPulse {
-  0% {
-    transform: scale(0.9);
-    opacity: 0.15;
+/* ========================= */
+/* MARQUEE ANIMATIONS */
+/* ========================= */
+@keyframes marqueeLeft {
+  from {
+    transform: translateX(0);
   }
-  100% {
-    transform: scale(1.15);
-    opacity: 0.28;
+  to {
+    transform: translateX(-50%);
   }
 }
 
-@keyframes floatCard {
-  0%, 100% {
-    transform: translateY(0);
+@keyframes marqueeRight {
+  from {
+    transform: translateX(-50%);
   }
-  50% {
-    transform: translateY(-5px);
+  to {
+    transform: translateX(0);
   }
 }
 
-/* ================================================= */
-/* MOBILE — 2 ITEMS PER ROW (FORCED) */
-/* ================================================= */
+/* ========================= */
+/* MOBILE — GRID */
+/* ========================= */
 @media (max-width: 900px) {
-  .service-grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 14px !important;
-    padding: 12px !important;
-    overflow: hidden !important;
-    width: 100%;
+  .skills-marquee {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .skills-track {
+    display: contents;
+    animation: none !important;
   }
 
   .skill-card {
-    width: 100% !important;
-    min-width: 0 !important;
+    width: 100%;
     padding: 18px 14px;
     border-radius: 16px;
-    animation: none;
   }
 
   .skill-icon {
     font-size: 2.4rem;
-    margin-bottom: 6px;
   }
 
   .skill-card h3 {
@@ -175,12 +165,12 @@
   }
 }
 
-/* ================================================= */
+/* ========================= */
 /* SMALL MOBILE */
-/* ================================================= */
+/* ========================= */
 @media (max-width: 600px) {
-  .service-grid {
-    gap: 12px !important;
+  .skills-marquee {
+    gap: 12px;
   }
 
   .skill-card {
@@ -194,7 +184,6 @@
 
   .skill-icon {
     font-size: 2.1rem;
-    margin-bottom: 4px;
   }
 
   .skill-card h3 {

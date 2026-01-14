@@ -13,6 +13,7 @@ const App = () => {
     <>
   
       <ParticleBackground />
+    
       <SmokeyCursor/>
       <Navbar />
       <Hero />

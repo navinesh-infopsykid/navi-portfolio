@@ -23,22 +23,22 @@ const About = () => {
       >
         I’m a <span>Software Engineer</span> who loves transforming complex ideas
         into <span>clean, scalable</span> and <span>high-impact</span> digital
-        products. I don’t just build apps — I craft experiences that feel fast,
+        products. I don’t just build apps , I craft experiences that feel fast,
         intuitive, and purposeful.
       </motion.p>
 
       <div className="about-grid">
         {[
           {
-            title: "⚙️ Engineering Mindset",
-            text: "I focus on architecture, performance, and long-term scalability. Every decision is intentional — from state management to pixel-perfect UI."
+            title: " Engineering Mindset",
+            text: "I focus on architecture, performance, and long-term scalability. Every decision is intentional, from state management to pixel-perfect UI."
           },
           {
-            title: "🎨 Design + Code",
-            text: "I bridge the gap between design and development. Smooth animations, micro-interactions, and delightful UX are not optional — they’re essential."
+            title: " Design + Code",
+            text: "I bridge the gap between design and development. Smooth animations, micro-interactions, and delightful UX are not optional , they’re essential."
           },
           {
-            title: "🚀 Impact Driven",
+            title: " Impact Driven",
             text: "I care about solving real problems. Whether its optimizing workflows or improving usability, my goal is measurable impact."
           },
         ].map((item, i) => (
@@ -66,7 +66,7 @@ const About = () => {
         <p>
           💡 Currently building modern applications using{" "}
           <span>Flutter</span>, <span>React</span>, <span>TypeScript</span>, and{" "}
-          <span>Firebase</span> — with a strong focus on clean architecture,
+          <span>Firebase</span> - with a strong focus on clean architecture,
           performance optimization, and delightful user experiences.
         </p>
       </motion.div>
