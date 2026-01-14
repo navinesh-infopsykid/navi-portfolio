@@ -236,7 +236,7 @@ h2 {
   margin-bottom: 20px;
 }
 .hero-game {
-  margin-top: 90px; /* ✅ NOW THIS WORKS */
+  margin-top: 50px; /* ✅ NOW THIS WORKS */
 }
 
 
@@ -260,6 +260,7 @@ h2 {
 .hero-buttons {
   display: flex;
   gap: 20px;
+  justify-content: cente;
 }
 
 .hero-media {
@@ -281,69 +282,6 @@ h2 {
   box-shadow:
     0 30px 80px rgba(139, 92, 246, 0.35),
     inset 0 0 30px rgba(255, 255, 255, 0.15);
-}
-
-/* 3D Scene */
-.cube-scene {
-  width: 320px;
-  height: 320px;
-  perspective: 900px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-/* Cube Face */
-.cube-face {
-  width: 260px;
-  height: 260px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  gap: 10px;
-
-  transform-style: preserve-3d;
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 24px;
-  padding: 12px;
-
-  box-shadow:
-    0 40px 80px rgba(139, 92, 246, 0.35),
-    inset 0 0 30px rgba(255, 255, 255, 0.1);
-}
-
-/* Cube Tiles */
-.cube-tile {
-  border-radius: 14px;
-  background: linear-gradient(
-    135deg,
-    rgba(139, 92, 246, 0.5),
-    rgba(217, 70, 239, 0.45),
-    rgba(34, 211, 238, 0.45)
-  );
-  backdrop-filter: blur(14px);
-  box-shadow:
-    inset 0 0 12px rgba(255, 255, 255, 0.25),
-    0 12px 30px rgba(139, 92, 246, 0.25);
-  transition: transform 0.3s ease;
-}
-
-.cube-tile:hover {
-  transform: translateZ(18px);
-}
-
-/* Responsive */
-@media (max-width: 900px) {
-  .cube-scene {
-    width: 260px;
-    height: 260px;
-  }
-
-  .cube-face {
-    width: 220px;
-    height: 220px;
-  }
 }
 
 /* Buttons */
@@ -394,61 +332,12 @@ h2 {
 
 
 
-.hero-content h1 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  line-height: 1.1;
-}
-
 .hero-content h1 span {
   background: linear-gradient(90deg, var(--accent-purple), var(--accent-lavender));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-
-
-/* ================= BUTTONS ================= */
-
-
-
-
-
-
-/* ================= SKILLS & PROJECTS ================= */
-.service-grid, .project-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 24px;
-}
-
-.skill-card, .project-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: rgba(3, 3, 19, 0.6);
-  border: 1px solid var(--accent-purple);
-  border-radius: 24px;
-  padding: 20px;
-  text-align: center;
-  transition: all 0.3s ease;
-}
-
-.skill-card:hover, .project-card:hover {
-  transform: scale(1.05) translateY(-5px);
-  box-shadow: 0 0 25px var(--accent-purple);
-}
-
-.skill-icon {
-  font-size: 3rem;
-  color: var(--accent-purple);
-  filter: drop-shadow(0 0 12px var(--accent-purple));
-  transition: transform 0.3s ease;
-}
-
-.skill-card:hover .skill-icon {
-  transform: scale(1.2) rotate(-5deg);
-}
 
 /* ================= CONTACT FORM ================= */
 .contact-form {

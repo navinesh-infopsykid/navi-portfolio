@@ -78,7 +78,7 @@ const Projects = () => {
   };
 
   return (
-    <section className="projects-section">
+    <section  id="projects" className="projects-section">
       <h2>Featured Projects</h2>
 
       <div className="carousel-wrapper">

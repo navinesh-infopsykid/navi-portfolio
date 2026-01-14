@@ -25,23 +25,15 @@ const sections: Section[] = [
 ];
 
 const Navbar: React.FC = () => {
- // const [theme, setTheme] = useState<"dark" | "light">("dark");
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") as "dark" | "light";
     if (savedTheme) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-     // setTheme(savedTheme);
       document.documentElement.setAttribute("data-theme", savedTheme);
     }
   }, []);
 
-//   const toggleTheme = () => {
-//     const newTheme = theme === "dark" ? "light" : "dark";
-//     setTheme(newTheme);
-//     document.documentElement.setAttribute("data-theme", newTheme);
-//     localStorage.setItem("theme", newTheme);
-//   };
+
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
