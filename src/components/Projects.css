@@ -9,19 +9,17 @@
   letter-spacing: 1.5px;
 }
 
-/* ============================= */
-/* CAROUSEL */
-/* ============================= */
+/* ================= CAROUSEL ================= */
 .carousel-wrapper {
   position: relative;
-  height: 460px;
+  height: 480px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 }
 
-/* Card */
+/* ================= CARD ================= */
 .carousel-card {
   position: absolute;
   width: 340px;
@@ -33,7 +31,7 @@
     rgba(14, 14, 28, 0.92)
   );
   box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6);
-  cursor: grab;
+  cursor: pointer;
   overflow: hidden;
   user-select: none;
 }
@@ -45,9 +43,9 @@
 /* Glow */
 .card-glow {
   position: absolute;
-  inset: -50%;
+  inset: -60%;
   background: radial-gradient(circle, #61dafb, transparent 65%);
-  filter: blur(100px);
+  filter: blur(110px);
   opacity: 0.22;
 }
 
@@ -72,7 +70,7 @@
   line-height: 1.5;
 }
 
-/* Skills */
+/* ================= SKILLS ================= */
 .card-skills {
   display: flex;
   flex-wrap: wrap;
@@ -80,58 +78,27 @@
 }
 
 .skill-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   padding: 7px 14px;
   font-size: 0.75rem;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(8px);
+  transition: transform 0.25s ease, background 0.25s ease;
 }
 
-/* ============================= */
-/* RESPONSIVE (KEEP HORIZONTAL) */
-/* ============================= */
-@media (max-width: 900px) {
-  .carousel-wrapper {
-    height: 380px;
-  }
-
-  .carousel-card {
-    width: 280px;
-    height: 340px;
-  }
+.skill-chip:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: translateY(-2px);
 }
 
-@media (max-width: 600px) {
-  .carousel-wrapper {
-    height: 320px;
-  }
-
-  .carousel-card {
-    width: 220px;
-    height: 280px;
-  }
-
-  .card-content {
-    padding: 20px;
-  }
-
-  .card-content h3 {
-    font-size: 1.1rem;
-  }
-
-  .card-content p {
-    font-size: 0.85rem;
-  }
-
-  .skill-chip {
-    font-size: 0.65rem;
-    padding: 6px 10px;
-  }
+.skill-icon {
+  font-size: 0.9rem;
 }
 
-/* ============================= */
-/* NAV BUTTONS */
-/* ============================= */
+/* ================= NAV BUTTONS ================= */
 .nav-btn {
   position: absolute;
   top: 50%;
@@ -141,7 +108,6 @@
   border-radius: 50%;
   border: none;
   font-size: 28px;
-  font-weight: bold;
   background: rgba(255, 255, 255, 0.12);
   color: white;
   backdrop-filter: blur(8px);
@@ -163,18 +129,25 @@
   right: 12px;
 }
 
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px) {
+  .carousel-card {
+    width: 280px;
+    height: 340px;
+  }
+}
+
 @media (max-width: 600px) {
-  .nav-btn {
-    width: 38px;
-    height: 38px;
-    font-size: 22px;
+  .carousel-wrapper {
+    height: 360px;
   }
 
-  .nav-btn.left {
-    left: 6px;
+  .carousel-card {
+    width: 230px;
+    height: 300px;
   }
 
-  .nav-btn.right {
-    right: 6px;
+  .card-content {
+    padding: 20px;
   }
 }
