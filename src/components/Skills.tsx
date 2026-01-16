@@ -4,6 +4,7 @@ import "./Skills.css";
 
 import { FaReact, FaFire, FaGitAlt, FaPython } from "react-icons/fa";
 import { SiFlutter, SiTypescript, SiSupabase } from "react-icons/si";
+
 type Skill = {
   name: string;
   icon: React.ReactNode;
@@ -26,9 +27,10 @@ const skills: Skill[] = [
   { name: "CI / CD", icon: <FaGitAlt />, color: "#22C55E" },
 ];
 
+/* ================= UTIL ================= */
+const isMobile = () => window.innerWidth <= 900;
 
-/* ================= FRAMER VARIANTS ================= */
-
+/* ================= ANIMATIONS ================= */
 const containerVariants = {
   hidden: {},
   show: {
@@ -40,24 +42,16 @@ const containerVariants = {
 };
 
 const cardVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    x: -120,
-    rotateZ: -6,
-    scale: 0.9,
-  },
+  hidden: { opacity: 0, y: 40, scale: 0.9 },
   show: {
     opacity: 1,
-    x: 0,
-    rotateZ: 0,
+    y: 0,
     scale: 1,
-    transition: {
-      type: "spring",
-      stiffness: 110,
-      damping: 16,
-    },
+    transition: { type: "spring", stiffness: 120, damping: 18 },
   },
 };
+
+/* ================= CARD ================= */
 interface SkillCardProps {
   skill: Skill;
 }
@@ -68,10 +62,7 @@ const SkillCard: React.FC<SkillCardProps> = ({ skill }) => (
     variants={cardVariants}
     whileHover={{ scale: 1.08, rotateX: 6, rotateY: -6 }}
   >
-    <span
-      className="skill-glow"
-      style={{ backgroundColor: skill.color }}
-    />
+    <span className="skill-glow" style={{ backgroundColor: skill.color }} />
 
     <motion.div
       className="skill-icon"
@@ -87,42 +78,50 @@ const SkillCard: React.FC<SkillCardProps> = ({ skill }) => (
 );
 
 /* ================= COMPONENT ================= */
-
 const Skills = () => {
-  const topRow = skills.slice(0, Math.ceil(skills.length / 2));
-  const bottomRow = skills.slice(Math.ceil(skills.length / 2));
+  const half = Math.ceil(skills.length / 2);
+  const topRow = skills.slice(0, half);
+  const bottomRow = skills.slice(half);
 
   return (
     <section id="skills" className="section">
       <h2>Skills</h2>
 
-      <div className="skills-marquee">
-        {/* TOP ROW → LEFT */}
-        <motion.div
-          className="skills-track left"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
-        >
-          {[...topRow, ...topRow].map((skill, i) => (
-            <SkillCard key={`top-${i}`} skill={skill} />
+      {isMobile() ? (
+        /* 📱 MOBILE — CLEAN GRID */
+        <div className="skills-marquee">
+          {skills.map((skill) => (
+            <SkillCard key={skill.name} skill={skill} />
           ))}
-        </motion.div>
+        </div>
+      ) : (
+        /* 🖥️ DESKTOP — INFINITE MARQUEE */
+        <div className="skills-marquee">
+          <motion.div
+            className="skills-track left"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+          >
+            {[...topRow, ...topRow].map((skill, i) => (
+              <SkillCard key={`top-${i}`} skill={skill} />
+            ))}
+          </motion.div>
 
-        {/* BOTTOM ROW → RIGHT */}
-        <motion.div
-          className="skills-track right"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
-        >
-          {[...bottomRow, ...bottomRow].map((skill, i) => (
-            <SkillCard key={`bottom-${i}`} skill={skill} />
-          ))}
-        </motion.div>
-      </div>
+          <motion.div
+            className="skills-track right"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+          >
+            {[...bottomRow, ...bottomRow].map((skill, i) => (
+              <SkillCard key={`bottom-${i}`} skill={skill} />
+            ))}
+          </motion.div>
+        </div>
+      )}
     </section>
   );
 };

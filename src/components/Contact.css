@@ -1,0 +1,98 @@
+/* ================= CONTACT FORM ================= */
+.contact-form {
+  max-width: 1100px;              /* wider form */
+  margin: 80px auto;              /* more vertical spacing */
+  display: flex;
+  flex-direction: column;
+  gap: 26px;                      /* more space between fields */
+  padding: 40px;                  /* form container padding */
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 24px;
+  backdrop-filter: blur(14px);
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 22px 26px;             /* BIG input height */
+  font-size: 18px;                /* bigger text */
+  border-radius: 18px;
+  border: 1px solid var(--border-glass);
+  background: var(--bg-glass);
+  color: var(--accent-white);
+  transition: all 0.3s ease;
+}
+
+.contact-form textarea {
+  min-height: 180px;              /* BIG textarea */
+  resize: vertical;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  font-size: 16px;
+  opacity: 0.8;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 25px var(--accent-purple);
+  transform: scale(1.01);
+}
+/* ================= FIELD WRAPPER ================= */
+.field {
+  position: relative;
+}
+
+/* ================= ERROR ================= */
+.error {
+  color: #ff6b6b;
+  font-size: 14px;
+  margin-top: 6px;
+  display: block;
+}
+
+/* ================= EMAIL SUGGESTIONS ================= */
+.email-field {
+  position: relative;
+}
+
+.email-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(20, 20, 30, 0.95);
+  border-radius: 12px;
+  margin-top: 8px;
+  list-style: none;
+  padding: 6px;
+  z-index: 10;
+}
+
+.email-suggestions li {
+  padding: 12px 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.email-suggestions li:hover {
+  background: rgba(168, 85, 247, 0.2);
+}
+
+/* ================= PHONE FIELD ================= */
+.phone-field {
+  display: flex;
+  gap: 14px;
+}
+
+.phone-field select {
+  padding: 22px;
+  border-radius: 18px;
+  background: var(--bg-glass);
+  color: var(--accent-white);
+  border: 1px solid var(--border-glass);
+}
