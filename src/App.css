@@ -290,49 +290,7 @@ h2 {
 }
 
 
-/* ================= CONTACT FORM ================= */
-.contact-form {
-  max-width: 1100px;              /* wider form */
-  margin: 80px auto;              /* more vertical spacing */
-  display: flex;
-  flex-direction: column;
-  gap: 26px;                      /* more space between fields */
-  padding: 40px;                  /* form container padding */
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: 24px;
-  backdrop-filter: blur(14px);
-}
 
-.contact-form input,
-.contact-form textarea {
-  width: 100%;
-  padding: 22px 26px;             /* BIG input height */
-  font-size: 18px;                /* bigger text */
-  border-radius: 18px;
-  border: 1px solid var(--border-glass);
-  background: var(--bg-glass);
-  color: var(--accent-white);
-  transition: all 0.3s ease;
-}
-
-.contact-form textarea {
-  min-height: 180px;              /* BIG textarea */
-  resize: vertical;
-}
-
-.contact-form input::placeholder,
-.contact-form textarea::placeholder {
-  font-size: 16px;
-  opacity: 0.8;
-}
-
-.contact-form input:focus,
-.contact-form textarea:focus {
-  outline: none;
-  border-color: var(--accent-purple);
-  box-shadow: 0 0 25px var(--accent-purple);
-  transform: scale(1.01);
-}
 
 /* ================= RESPONSIVE ================= */
 @media (max-width: 900px) {
