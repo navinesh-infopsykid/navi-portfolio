@@ -65,7 +65,7 @@ const About = () => {
       >
         <p>
           💡 Currently building modern applications using{" "}
-          <span>Flutter</span>, <span>React</span>, <span>TypeScript</span>, and{" "}
+          <span>Flutter</span>, <span>React</span>, <span>React Native</span>, <span>TypeScript</span>, and{" "}
           <span>Firebase</span> - with a strong focus on clean architecture,
           performance optimization, and delightful user experiences.
         </p>
