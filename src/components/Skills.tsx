@@ -2,8 +2,9 @@ import React from "react";
 import { motion, type Variants } from "framer-motion";
 import "./Skills.css";
 
-import { FaReact, FaFire, FaGitAlt, FaPython ,FaAws} from "react-icons/fa";
-import { SiFlutter, SiTypescript } from "react-icons/si";
+import { FaReact, FaGitAlt, FaPython ,FaAws, FaFire} from "react-icons/fa";
+import { SiDart, SiFlutter, SiGithubactions, SiMongodb, SiNextdotjs, SiOllama, SiTypescript } from "react-icons/si";
+import { DiNodejsSmall } from "react-icons/di";
 
 /* =========================
    TYPES
@@ -19,17 +20,18 @@ type Skill = {
 ========================= */
 const SKILLS: Skill[] = [
   { name: "React", icon: <FaReact />, color: "#61DAFB" },
-  { name: "Next.js", icon: <FaReact />, color: "#ffffff" },
-  { name: "Flutter", icon: <SiFlutter />, color: "#00E5FF" },
-  { name: "Dart", icon: <SiFlutter />, color: "#0175C2" },
-  { name: "TypeScript", icon: <SiTypescript />, color: "#00B0FF" },
-  { name: "Node.js", icon: <FaReact />, color: "#68A063" },
+  { name: "Next.js", icon: <SiNextdotjs />, color: "#000000" }, // Use #FFFFFF if on a dark background
+  { name: "Flutter", icon: <SiFlutter />, color: "#02569B" },
+  { name: "Node.js", icon: <DiNodejsSmall />, color: "#339933" },
+  { name: "MongoDB", icon: <SiMongodb />, color: "#47A248" }, // Or #00ED64 for the vibrant version
+  { name: "Dart", icon: <SiDart />, color: "#0175C2" },
+  { name: "TypeScript", icon: <SiTypescript />, color: "#3178C6" },
   { name: "Python", icon: <FaPython />, color: "#3776AB" },
-   { name: "AWS", icon: <FaAws />, color: "#ffffff" },
-  { name: "Firebase", icon: <FaFire />, color: "#FFCA29" },
-  { name: "Ollama (LLMs)", icon: <FaReact />, color: "#A855F7" },
+  { name: "AWS", icon: <FaAws />, color: "#FF9900" }, // Official AWS Squid Ink/Orange
+  { name: "Firebase", icon: <FaFire />, color: "#FFCA28" },
+  { name: "Ollama (LLMs)", icon: <SiOllama />, color: "#000000" }, // Ollama branding is typically monochrome
   { name: "Git", icon: <FaGitAlt />, color: "#F05032" },
-  { name: "CI / CD", icon: <FaGitAlt />, color: "#22C55E" },
+  { name: "CI / CD", icon: <SiGithubactions />, color: "#2088FF" } // Using GitHub Actions as a standard CI/CD icon
 ];
 
 /* =========================
