@@ -1,175 +1,197 @@
-import React from "react";
-import { motion, type Variants } from "framer-motion";
-import "./Skills.css";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { skills } from "../data/portfolio";
 
-import { FaReact, FaGitAlt, FaPython ,FaAws, FaFire} from "react-icons/fa";
-import { SiDart, SiFlutter, SiGithubactions, SiMongodb, SiNextdotjs, SiOllama, SiTypescript } from "react-icons/si";
-import { DiNodejsSmall } from "react-icons/di";
+const CATEGORIES = [
+  "All", "Frontend", "Mobile", "State", "Backend",
+  "Cloud", "AI/ML", "DevOps", "Security", "Testing",
+] as const;
+type Category = (typeof CATEGORIES)[number];
 
-/* =========================
-   TYPES
-========================= */
-type Skill = {
-  name: string;
-  icon: React.ReactNode;
-  color: string;
+const CAT_COLOR: Record<string, string> = {
+  Frontend: "#00e5c0",
+  Mobile:   "#7b61ff",
+  State:    "#ff6eb4",
+  Backend:  "#ffb340",
+  Cloud:    "#00c6ff",
+  "AI/ML":  "#ff6b6b",
+  DevOps:   "#7fff00",
+  Security: "#ff9900",
+  Testing:  "#e879f9",
 };
 
-/* =========================
-   SKILLS CONFIG (DATA-DRIVEN)
-========================= */
-const SKILLS: Skill[] = [
-  { name: "React", icon: <FaReact />, color: "#61DAFB" },
-  { name: "Next.js", icon: <SiNextdotjs />, color: "#000000" }, // Use #FFFFFF if on a dark background
-  { name: "Flutter", icon: <SiFlutter />, color: "#02569B" },
-  { name: "Node.js", icon: <DiNodejsSmall />, color: "#339933" },
-  { name: "MongoDB", icon: <SiMongodb />, color: "#47A248" }, // Or #00ED64 for the vibrant version
-  { name: "Dart", icon: <SiDart />, color: "#0175C2" },
-  { name: "TypeScript", icon: <SiTypescript />, color: "#3178C6" },
-  { name: "Python", icon: <FaPython />, color: "#3776AB" },
-  { name: "AWS", icon: <FaAws />, color: "#FF9900" }, // Official AWS Squid Ink/Orange
-  { name: "Firebase", icon: <FaFire />, color: "#FFCA28" },
-  { name: "Ollama (LLMs)", icon: <SiOllama />, color: "#000000" }, // Ollama branding is typically monochrome
-  { name: "Git", icon: <FaGitAlt />, color: "#F05032" },
-  { name: "CI / CD", icon: <SiGithubactions />, color: "#2088FF" } // Using GitHub Actions as a standard CI/CD icon
+interface BarItem { label: string; pct: number; }
+const BARS: BarItem[] = [
+  { label: "React + TypeScript", pct: 95 },
+  { label: "Flutter / Dart",     pct: 88 },
+  { label: "Node.js / APIs",     pct: 78 },
+  { label: "AI/ML Engineering",  pct: 70 },
 ];
 
-/* =========================
-   MEDIA QUERY HOOK (BEST PRACTICE)
-========================= */
-const useMediaQuery = (query: string) => {
-  const [matches, setMatches] = React.useState(
-    window.matchMedia(query).matches
-  );
-
-  React.useEffect(() => {
-    const media = window.matchMedia(query);
-    const listener = () => setMatches(media.matches);
-
-    media.addEventListener("change", listener);
-    return () => media.removeEventListener("change", listener);
-  }, [query]);
-
-  return matches;
-};
-
-/* =========================
-   FRAMER MOTION VARIANTS
-========================= */
-const containerVariants: Variants = {
-  show: {
-    transition: {
-      staggerChildren: 0.06,
-      delayChildren: 0.15,
-    },
-  },
-};
-
-const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 40, scale: 0.9 },
-  show: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      type: "spring",
-      stiffness: 120,
-      damping: 18,
-    },
-  },
-};
-
-/* =========================
-   SKILL CARD (PURE UI)
-========================= */
-interface SkillCardProps {
-  skill: Skill;
-}
-
-const SkillCard: React.FC<SkillCardProps> = ({ skill }) => {
-  return (
-    <motion.div
-      className="skill-card"
-      variants={cardVariants}
-      whileHover={{ scale: 1.08, rotateX: 6, rotateY: -6 }}
-      role="listitem"
-      aria-label={skill.name}
-    >
-      {/* Glow background */}
-      <span
-        className="skill-glow"
-        style={{ backgroundColor: skill.color }}
-      />
-
-      {/* Floating Icon */}
-     <motion.div
-  className="skill-icon"
-  animate={{ y: [0, -10, 0] }}
-  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-  style={{
-    color: skill.color,
-    width: "60px",
-    height: "60px",
-  }}
->
-  {skill.icon}
-</motion.div>
-
-
-      <h3>{skill.name}</h3>
-    </motion.div>
-  );
-};
-
-/* =========================
-   MAIN COMPONENT
-========================= */
 const Skills: React.FC = () => {
-  const isMobile = useMediaQuery("(max-width: 900px)");
+  const [cat, setCat] = useState<Category>("All");
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
-  const half = Math.ceil(SKILLS.length / 2);
-  const topRow = SKILLS.slice(0, half);
-  const bottomRow = SKILLS.slice(half);
+  const filtered = cat === "All" ? skills : skills.filter((s) => s.category === cat);
 
   return (
-    <section id="skills" className="section">
-      <h2>Skills</h2>
+    <section id="skills" className="sec" ref={ref}>
+      <div className="sec-inner">
+        <motion.p
+          className="sec-label"
+          initial={{ opacity: 0, x: -16 }}
+          animate={inView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.5 }}
+        >
+          Technical Skills
+        </motion.p>
 
-      {/* MOBILE → GRID */}
-      {isMobile ? (
-        <div className="skills-grid" role="list">
-          {SKILLS.map((skill) => (
-            <SkillCard key={skill.name} skill={skill} />
+        <motion.h2
+          className="sec-title"
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.65, delay: 0.1 }}
+        >
+          My Toolbox
+        </motion.h2>
+
+        {/* Category tabs */}
+        <motion.div
+          className="sk-tabs"
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ delay: 0.2 }}
+          role="tablist"
+          aria-label="Skill categories"
+        >
+          {CATEGORIES.map((c) => (
+            <button
+              key={c}
+              type="button"
+              role="tab"
+              aria-selected={cat === c}
+              className={`sk-tab${cat === c ? " active" : ""}`}
+              onClick={() => setCat(c)}
+              style={
+                cat === c && c !== "All"
+                  ? { borderColor: CAT_COLOR[c] ?? "var(--teal)", color: CAT_COLOR[c] ?? "var(--teal)" }
+                  : {}
+              }
+            >
+              {c}
+            </button>
           ))}
-        </div>
-      ) : (
-        /* DESKTOP → INFINITE MARQUEE */
-        <div className="skills-marquee">
-          <motion.div
-            className="skills-track left"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-          >
-            {[...topRow, ...topRow].map((skill, i) => (
-              <SkillCard key={`top-${i}`} skill={skill} />
-            ))}
-          </motion.div>
+        </motion.div>
 
+        {/* Pills grid */}
+        <AnimatePresence mode="wait">
           <motion.div
-            className="skills-track right"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
+            key={cat}
+            className="sk-grid"
+            role="list"
+            aria-label={`${cat} skills`}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.32 }}
           >
-            {[...bottomRow, ...bottomRow].map((skill, i) => (
-              <SkillCard key={`bottom-${i}`} skill={skill} />
+            {filtered.map((sk, i) => (
+              <motion.div
+                key={sk.name}
+                role="listitem"
+                className="sk-pill card"
+                style={{ "--cc": CAT_COLOR[sk.category] ?? "var(--teal)" } as React.CSSProperties}
+                initial={{ opacity: 0, scale: 0.92 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: i * 0.025, duration: 0.28 }}
+                data-hover
+              >
+                <span className="sk-pill__dot" aria-hidden="true" />
+                <span className="sk-pill__name">{sk.name}</span>
+                <span className="sk-pill__cat">{sk.category}</span>
+              </motion.div>
             ))}
           </motion.div>
-        </div>
-      )}
+        </AnimatePresence>
+
+        {/* Proficiency bars */}
+        <motion.div
+          className="sk-bars card"
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.45 }}
+        >
+          {BARS.map((b, i) => (
+            <div key={b.label} className="sk-bar">
+              <div className="sk-bar__head">
+                <span className="sk-bar__lbl">{b.label}</span>
+                <span className="sk-bar__val">{b.pct}%</span>
+              </div>
+              <div className="sk-bar__track" role="progressbar" aria-valuenow={b.pct} aria-valuemin={0} aria-valuemax={100} aria-label={b.label}>
+                <motion.div
+                  className="sk-bar__fill"
+                  initial={{ width: 0 }}
+                  animate={inView ? { width: `${b.pct}%` } : {}}
+                  transition={{ duration: 1.1, delay: 0.5 + i * 0.14, ease: [0.16, 1, 0.3, 1] }}
+                />
+              </div>
+            </div>
+          ))}
+        </motion.div>
+      </div>
+
+      <style>{`
+        .sk-tabs {
+          display: flex; flex-wrap: wrap; gap: 8px;
+          margin-bottom: 36px;
+        }
+        .sk-tab {
+          padding: 7px 17px;
+          border-radius: 999px;
+          border: 1px solid var(--border);
+          background: var(--surface-2);
+          color: var(--muted);
+          font-size: 0.82rem; font-weight: 500;
+          cursor: pointer;
+          transition: all 0.22s ease;
+        }
+        .sk-tab:hover { border-color: var(--muted-2); color: var(--white); }
+        .sk-tab.active { background: var(--teal-dim); border-color: var(--teal); color: var(--teal); }
+        .sk-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(185px,1fr));
+          gap: 12px;
+          margin-bottom: 48px;
+          min-height: 80px;
+        }
+        .sk-pill {
+          display: flex; align-items: center; gap: 11px;
+          padding: 14px 18px;
+          border-radius: var(--r-md);
+          cursor: default;
+        }
+        .sk-pill:hover { border-color: var(--cc); transform: translateY(-3px); }
+        .sk-pill__dot {
+          width: 7px; height: 7px;
+          border-radius: 50%;
+          background: var(--cc);
+          flex-shrink: 0;
+        }
+        .sk-pill__name { font-size: 0.88rem; font-weight: 500; color: var(--white); flex: 1; }
+        .sk-pill__cat  { font-size: 0.68rem; color: var(--muted-2); text-transform: uppercase; letter-spacing: 0.07em; white-space: nowrap; }
+        .sk-bars { padding: 36px 40px; display: flex; flex-direction: column; gap: 28px; }
+        .sk-bar { display: flex; flex-direction: column; gap: 9px; }
+        .sk-bar__head { display: flex; justify-content: space-between; }
+        .sk-bar__lbl { font-size: 0.88rem; font-weight: 500; color: var(--white); }
+        .sk-bar__val { font-family: var(--font-display); font-size: 0.85rem; color: var(--teal); font-weight: 700; }
+        .sk-bar__track { height: 5px; background: var(--surface-3); border-radius: 3px; overflow: hidden; }
+        .sk-bar__fill  { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--teal), var(--violet)); }
+        @media (max-width: 700px) {
+          .sk-grid { grid-template-columns: repeat(2,1fr); }
+          .sk-bars { padding: 24px 22px; gap: 22px; }
+        }
+      `}</style>
     </section>
   );
 };
