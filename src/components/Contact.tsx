@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import emailjs from "@emailjs/browser";
 
 interface FormData {
   name: string;
@@ -68,29 +69,61 @@ const Contact: React.FC = () => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault();
-    if (!validate()) return;
-    setStatus("sending");
+  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+  //   e.preventDefault();
+  //   if (!validate()) return;
+  //   setStatus("sending");
 
-    try {
-      /* ── Replace this block with your EmailJS call ──
-         import emailjs from "@emailjs/browser";
-         await emailjs.send("SERVICE_ID","TEMPLATE_ID",{
-           name: form.name, email: form.email, message: form.message
-         }, "PUBLIC_KEY");
-      ───────────────────────────────────────────────── */
-      await new Promise<void>((resolve) => setTimeout(resolve, 1400));
+  //   try {
+  //     /* ── Replace this block with your EmailJS call ──
+  //        import emailjs from "@emailjs/browser";
+  //        await emailjs.send("SERVICE_ID","TEMPLATE_ID",{
+  //          name: form.name, email: form.email, message: form.message
+  //        }, "PUBLIC_KEY");
+  //     ───────────────────────────────────────────────── */
+  //     await new Promise<void>((resolve) => setTimeout(resolve, 1400));
 
-      setStatus("sent");
-      setForm({ name: "", email: "", message: "" });
-      setErrors({});
-      setTimeout(() => setStatus("idle"), 5000);
-    } catch {
-      setStatus("error");
-      setTimeout(() => setStatus("idle"), 4000);
-    }
-  };
+  //     setStatus("sent");
+  //     setForm({ name: "", email: "", message: "" });
+  //     setErrors({});
+  //     setTimeout(() => setStatus("idle"), 5000);
+  //   } catch {
+  //     setStatus("error");
+  //     setTimeout(() => setStatus("idle"), 4000);
+  //   }
+  // };
+  
+  const handleSubmit = async (
+  e: React.FormEvent<HTMLFormElement>
+): Promise<void> => {
+  e.preventDefault();
+  if (!validate()) return;
+
+  setStatus("sending");
+
+  try {
+    await emailjs.send(
+      import.meta.env.VITE_EMAIL_SERVICE_ID,
+  import.meta.env.VITE_EMAIL_TEMPLATE_ID,
+      {
+        name: form.name,
+        email: form.email,
+        message: form.message,
+        time: new Date().toLocaleString(),
+      },
+     import.meta.env.VITE_EMAIL_PUBLIC_KEY
+    );
+
+    setStatus("sent");
+    setForm({ name: "", email: "", message: "" });
+    setErrors({});
+    setTimeout(() => setStatus("idle"), 5000);
+  } catch (error) {
+    console.error("EmailJS Error:", error);
+    setStatus("error");
+    setTimeout(() => setStatus("idle"), 4000);
+  }
+};
 
   return (
     <section id="contact" className="sec contact-bg" ref={ref}>
