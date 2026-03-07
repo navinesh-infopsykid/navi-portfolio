@@ -128,7 +128,7 @@ const Skills: React.FC = () => {
                 <span className="sk-bar__lbl">{b.label}</span>
                 <span className="sk-bar__val">{b.pct}%</span>
               </div>
-              <div className="sk-bar__track" role="progressbar" aria-valuenow={b.pct} aria-valuemin={0} aria-valuemax={100} aria-label={b.label}>
+              <div className="sk-bar__track" role="progress" aria-valuenow={b.pct} aria-valuemin={0} aria-valuemax={100} aria-label={b.label}>
                 <motion.div
                   className="sk-bar__fill"
                   initial={{ width: 0 }}
