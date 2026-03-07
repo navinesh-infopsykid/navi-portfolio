@@ -25,7 +25,7 @@ interface BarItem { label: string; pct: number; }
 const BARS: BarItem[] = [
   { label: "React + TypeScript", pct: 95 },
   { label: "Flutter / Dart",     pct: 88 },
-  { label: "Node.js / APIs",     pct: 78 },
+  { label: "Python / FAST APIs",     pct: 78 },
   { label: "AI/ML Engineering",  pct: 70 },
 ];
 

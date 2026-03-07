@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import emailjs from "@emailjs/browser";
+import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 
 interface FormData {
   name: string;
@@ -24,21 +25,21 @@ const LINKS = [
     label: "Email",
     display: "inavineshraj@gmail.com",
     href: "mailto:inavineshraj@gmail.com",
-    icon: "✉️",
+    icon: FaEnvelope,
   },
   {
     label: "LinkedIn",
     display: "linkedin.com/in/navineshraj",
     href: "https://www.linkedin.com/in/navineshrajr/",
-    icon: "💼",
+    icon: FaLinkedin,
   },
   {
     label: "GitHub",
     display: "github.com/navineshraj",
     href: "https://github.com/navinesh-infopsykid",
-    icon: "🐙",
+    icon: FaGithub,
   },
-] as const;
+];
 
 /* =========================
    Helpers (reduce complexity)
@@ -303,35 +304,41 @@ const Contact: React.FC = () => {
             </p>
 
             <div className="ct-links">
-              {LINKS.map((l) => (
-                <a
-  key={l.label}
-  href={l.href}
-  className="ct-link card"
-  {...(l.href.startsWith("http")
-    ? { target: "_blank", rel: "noopener noreferrer" }
-    : {})}
->
-                  <span className="ct-link__icon">{l.icon}</span>
+            {LINKS.map((l) => {
+  const Icon = l.icon;
 
-                  <div className="ct-link__body">
-                    <span className="ct-link__label">{l.label}</span>
-                    <span className="ct-link__val">{l.display}</span>
-                  </div>
+  return (
+    <a
+      key={l.label}
+      href={l.href}
+      className="ct-link card"
+      {...(l.href.startsWith("http")
+        ? { target: "_blank", rel: "noopener noreferrer" }
+        : {})}
+    >
+      <span className="ct-link__icon">
+        <Icon size={20} />
+      </span>
 
-                  <svg
-                    className="ct-link__arr"
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.2"
-                  >
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                </a>
-              ))}
+      <div className="ct-link__body">
+        <span className="ct-link__label">{l.label}</span>
+        <span className="ct-link__val">{l.display}</span>
+      </div>
+
+      <svg
+        className="ct-link__arr"
+        width="15"
+        height="15"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.2"
+      >
+        <path d="M5 12h14M12 5l7 7-7 7" />
+      </svg>
+    </a>
+  );
+})}
             </div>
           </motion.div>
 

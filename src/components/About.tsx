@@ -1,29 +1,34 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { MapPin, GraduationCap, Building2, CheckCircle, Zap, Palette, TrendingUp  } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+
 
 interface Pillar {
-  icon: string;
+  icon: LucideIcon;
   title: string;
   text: string;
   color: string;
 }
 
+
+
 const PILLARS: Pillar[] = [
   {
-    icon: "⚡",
+    icon: Zap,
     title: "Engineering-First",
     text: "Architecture, performance, and long-term scalability guide every decision — from state management to pixel-perfect UI.",
     color: "var(--teal)",
   },
   {
-    icon: "🎨",
+    icon: Palette,
     title: "Design × Code",
     text: "I bridge design and development. Smooth animations, micro-interactions, and delightful UX are not optional — they are essential.",
     color: "var(--violet)",
   },
   {
-    icon: "📈",
+    icon: TrendingUp,
     title: "Impact-Driven",
     text: "Measurable outcomes over vanity metrics. I optimise workflows, mentor teams, and ship things that move numbers.",
     color: "var(--amber)",
@@ -34,6 +39,8 @@ const TAGS = ["React 18", "TypeScript", "Flutter", "Auth0", "CI/CD", "Scrum Mast
 
 const About: React.FC = () => {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.12 });
+
+  
 
   return (
     <section id="about" className="sec about-bg" ref={ref}>
@@ -105,36 +112,57 @@ const About: React.FC = () => {
               </div>
               <div className="id-divider" />
               <ul className="id-meta">
-                <li><span aria-hidden="true">📍</span> Bangalore, KA, India</li>
-                <li><span aria-hidden="true">🎓</span> MCA – JAIN University</li>
-                <li><span aria-hidden="true">🏢</span> Trudosys TECH LLP</li>
-                <li className="id-avail"><span aria-hidden="true">✅</span> Open to opportunities</li>
+                <li>
+    <MapPin size={18} className="icon" />
+    Bangalore, KA, India
+  </li>
+
+  <li>
+    <GraduationCap size={18} className="icon" />
+    MCA – JAIN University
+  </li>
+
+  <li>
+    <Building2 size={18} className="icon" />
+    Trudosys TECH LLP
+  </li>
+
+  <li className="id-avail">
+    <CheckCircle size={18} className="icon text-green-500" />
+    Open to opportunities
+  </li>
               </ul>
             </div>
           </motion.div>
         </div>
 
         {/* Pillars */}
-        <div className="pillars-grid">
-          {PILLARS.map((p, i) => (
-            <motion.article
-              key={p.title}
-              className="pillar card"
-              style={{ "--pc": p.color } as React.CSSProperties}
-              initial={{ opacity: 0, y: 24 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.55, delay: 0.35 + i * 0.1 }}
-              data-hover
-            >
-              <span className="pillar__icon" role="img" aria-label={p.title}>
-                {p.icon}
-              </span>
-              <h3 className="pillar__title">{p.title}</h3>
-              <p className="pillar__text">{p.text}</p>
-              <div className="pillar__bar" />
-            </motion.article>
-          ))}
-        </div>
+      {/* Pillars */}
+<div className="pillars-grid">
+  {PILLARS.map((p, i) => {
+    const Icon = p.icon; // 👈 create component here
+
+    return (
+      <motion.article
+        key={p.title}
+        className="pillar card"
+        style={{ "--pc": p.color } as React.CSSProperties}
+        initial={{ opacity: 0, y: 24 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.55, delay: 0.35 + i * 0.1 }}
+        data-hover
+      >
+        <span className="pillar__icon" aria-label={p.title}>
+          <Icon size={26} />
+        </span>
+
+        <h3 className="pillar__title">{p.title}</h3>
+        <p className="pillar__text">{p.text}</p>
+        <div className="pillar__bar" />
+      </motion.article>
+    );
+  })}
+</div>
       </div>
 
       <style>{`
