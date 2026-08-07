@@ -29,7 +29,7 @@ export interface Stat {
 export const stats: Stat[] = [
   { value: "5+",  label: "Production Apps Shipped" },
   { value: "18m", label: "L1 → L2 Promotion" },
-  { value: "2+",  label: "Years Experience" },
+  { value: "3+",  label: "Years Experience" },
   { value: "40%", label: "Faster Code Reviews" },
 ];
 
