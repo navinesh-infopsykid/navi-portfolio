@@ -1,0 +1,116 @@
+.ct {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 48px clamp(40px, 6vw, 96px);
+  align-items: start;
+}
+.ct__intro .section-title {
+  margin-bottom: 18px;
+}
+.ct__links {
+  margin-top: 28px;
+  display: grid;
+  gap: 4px;
+}
+.ct__links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  text-decoration: none;
+  font-weight: 500;
+  word-break: break-all;
+}
+.ct__links a:hover {
+  color: var(--accent);
+}
+.ct__links svg {
+  width: 19px;
+  height: 19px;
+  color: var(--ink-3);
+  flex-shrink: 0;
+}
+.ct__form,
+.ct__done {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: clamp(22px, 3vw, 32px);
+  box-shadow: var(--shadow);
+}
+.ct__form {
+  display: grid;
+  gap: 18px;
+}
+.ct__field {
+  display: grid;
+  gap: 6px;
+}
+.ct__field label {
+  font-weight: 500;
+  font-size: 0.93rem;
+}
+.ct__field input,
+.ct__field textarea {
+  width: 100%;
+  font: inherit;
+  font-size: 1rem;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 11px 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.ct__field textarea {
+  resize: vertical;
+  min-height: 130px;
+}
+.ct__field input:focus,
+.ct__field textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+.ct__field.has-error input,
+.ct__field.has-error textarea {
+  border-color: var(--down);
+}
+.ct__error {
+  color: var(--down);
+  font-size: 0.88rem;
+}
+.ct__submit {
+  justify-content: center;
+}
+.ct__submit:disabled {
+  opacity: 0.7;
+  cursor: progress;
+}
+.ct__done {
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+}
+.ct__done-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--up) 16%, transparent);
+  color: var(--up);
+}
+.ct__done h3 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+}
+.ct__done p {
+  color: var(--ink-2);
+  margin-bottom: 8px;
+}
+@media (max-width: 860px) {
+  .ct {
+    grid-template-columns: 1fr;
+  }
+}

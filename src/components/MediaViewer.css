@@ -1,0 +1,81 @@
+.mv {
+  margin: auto;
+  width: min(1100px, calc(100vw - 24px));
+  max-height: calc(100dvh - 24px);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--panel);
+  color: var(--ink);
+  padding: 0;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+}
+.mv::backdrop {
+  background: rgba(6, 12, 24, 0.72);
+  backdrop-filter: blur(4px);
+}
+.mv__body {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100dvh - 26px);
+}
+.mv__head,
+.mv__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 12px 10px 20px;
+}
+.mv__head p {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+}
+.mv__count {
+  color: var(--ink-3);
+  font-size: 0.88rem;
+  font-variant-numeric: tabular-nums;
+}
+.mv__stage {
+  background: #050a14;
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  flex: 1;
+}
+.mv__stage img,
+.mv__stage video {
+  max-width: 100%;
+  max-height: calc(100dvh - 150px);
+  object-fit: contain;
+}
+.mv__stage iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+}
+.mv__caption {
+  color: var(--ink-2);
+  font-size: 0.9rem;
+}
+.mv__nav {
+  display: flex;
+  gap: 4px;
+}
+.mv__btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  color: var(--ink-2);
+  flex-shrink: 0;
+}
+.mv__btn:hover {
+  background: var(--panel-2);
+  color: var(--ink);
+}
+.mv__btn svg {
+  width: 20px;
+  height: 20px;
+}

@@ -1,400 +1,160 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
 import emailjs from "@emailjs/browser";
-import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { Mail, Check } from "lucide-react";
+import { profile } from "../data/portfolio";
+import "./Contact.css";
 
-interface FormData {
+type Status = "idle" | "sending" | "sent" | "error";
+interface Form {
   name: string;
   email: string;
   message: string;
 }
-
-interface FormErrors {
-  name?: string;
-  email?: string;
-  message?: string;
-}
-
-type SendStatus = "idle" | "sending" | "sent" | "error";
+type Errors = Partial<Record<keyof Form, string>>;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-const LINKS = [
-  {
-    label: "Email",
-    display: "inavineshraj@gmail.com",
-    href: "mailto:inavineshraj@gmail.com",
-    icon: FaEnvelope,
-  },
-  {
-    label: "LinkedIn",
-    display: "linkedin.com/in/navineshraj",
-    href: "https://www.linkedin.com/in/navineshrajr/",
-    icon: FaLinkedin,
-  },
-  {
-    label: "GitHub",
-    display: "github.com/navineshraj",
-    href: "https://github.com/navinesh-infopsykid",
-    icon: FaGithub,
-  },
-];
-
-/* =========================
-   Helpers (reduce complexity)
-   ========================= */
-
-const sendEmail = async (
-  form: FormData,
-  setStatus: React.Dispatch<React.SetStateAction<SendStatus>>,
-  setForm: React.Dispatch<React.SetStateAction<FormData>>,
-  setErrors: React.Dispatch<React.SetStateAction<FormErrors>>
-): Promise<void> => {
-  setStatus("sending");
-
-  try {
-    await emailjs.send(
-      import.meta.env.VITE_EMAIL_SERVICE_ID,
-      import.meta.env.VITE_EMAIL_TEMPLATE_ID,
-      {
-        name: form.name,
-        email: form.email,
-        message: form.message,
-        time: new Date().toLocaleString(),
-      },
-      import.meta.env.VITE_EMAIL_PUBLIC_KEY
-    );
-
-    setStatus("sent");
-    setForm({ name: "", email: "", message: "" });
-    setErrors({});
-    setTimeout(() => setStatus("idle"), 5000);
-  } catch (error) {
-    console.error("EmailJS Error:", error);
-    setStatus("error");
-    setTimeout(() => setStatus("idle"), 4000);
-  }
-};
-
-/* =========================
-   Reusable Field Component
-   ========================= */
-
-const FormField: React.FC<{
-  id: keyof FormData;
-  label: string;
-  type?: string;
-  form: FormData;
-  errors: FormErrors;
-  onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
-  textarea?: boolean;
-}> = ({ id, label, type = "text", form, errors, onChange, textarea }) => {
-  const hasError = Boolean(errors[id]);
-  const fieldClass = `ct-field${hasError ? " ct-field--err" : ""}`;
-
-  let placeholder = "";
-
-if (id === "name") {
-  placeholder = "Your full name";
-} else if (id === "email") {
-  placeholder = "you@company.com";
-}
-
-  return (
-    <div className={fieldClass}>
-      <label className="ct-label" htmlFor={id}>
-        {label} *
-      </label>
-
-      {textarea ? (
-        <textarea
-          id={id}
-          name={id}
-          className="ct-input ct-textarea"
-          placeholder="Tell me about the opportunity or project..."
-          value={form[id]}
-          onChange={onChange}
-          rows={5}
-          aria-invalid={hasError}
-        />
-      ) : (
-        <input
-          id={id}
-          name={id}
-          type={type}
-          className="ct-input"
-         placeholder={placeholder}
-          value={form[id]}
-          onChange={onChange}
-          aria-invalid={hasError}
-        />
-      )}
-
-      {hasError && (
-        <span className="ct-err" role="alert">
-          {errors[id]}
-        </span>
-      )}
-    </div>
-  );
-};
-
-/* =========================
-   Success Card
-   ========================= */
-
-const SuccessCard = () => (
-  <motion.div
-    className="ct-success card"
-    initial={{ scale: 0.9, opacity: 0 }}
-    animate={{ scale: 1, opacity: 1 }}
-    role="alert"
-  >
-    <span className="ct-success__icon">🚀</span>
-    <h3 className="ct-success__title">Message Sent!</h3>
-    <p className="ct-success__body">
-      Thanks for reaching out — I&apos;ll get back to you soon.
-    </p>
-  </motion.div>
-);
-
-/* =========================
-   Contact Form Component
-   ========================= */
-
-const ContactForm: React.FC<{
-  form: FormData;
-  errors: FormErrors;
-  status: SendStatus;
-  onSubmit: React.FormEventHandler<HTMLFormElement>;
-  onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
-}> = ({ form, errors, status, onSubmit, onChange }) => (
-  <form className="ct-form card" onSubmit={onSubmit} noValidate>
-    <FormField id="name" label="Your Name" form={form} errors={errors} onChange={onChange} />
-
-    <FormField
-      id="email"
-      label="Email Address"
-      type="email"
-      form={form}
-      errors={errors}
-      onChange={onChange}
-    />
-
-    <FormField
-      id="message"
-      label="Message"
-      form={form}
-      errors={errors}
-      onChange={onChange}
-      textarea
-    />
-
-    {status === "error" && (
-      <p className="ct-err" role="alert">
-        Something went wrong. Please try again.
-      </p>
-    )}
-
-    <button
-      type="submit"
-      className="btn-primary ct-submit"
-      disabled={status === "sending"}
-      aria-busy={status === "sending"}
-    >
-      {status === "sending" ? (
-        <>
-          <span className="ct-spinner" /> Sending…
-        </>
-      ) : (
-        <>
-          Send Message
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-        </>
-      )}
-    </button>
-  </form>
-);
-
-/* =========================
-   Main Component
-   ========================= */
+const SERVICE = import.meta.env.VITE_EMAIL_SERVICE_ID as string | undefined;
+const TEMPLATE = import.meta.env.VITE_EMAIL_TEMPLATE_ID as string | undefined;
+const KEY = import.meta.env.VITE_EMAIL_PUBLIC_KEY as string | undefined;
+const formEnabled = Boolean(SERVICE && TEMPLATE && KEY);
 
 const Contact: React.FC = () => {
-  const [form, setForm] = useState<FormData>({ name: "", email: "", message: "" });
-  const [errors, setErrors] = useState<FormErrors>({});
-  const [status, setStatus] = useState<SendStatus>("idle");
-
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  const [form, setForm] = useState<Form>({ name: "", email: "", message: "" });
+  const [errors, setErrors] = useState<Errors>({});
+  const [status, setStatus] = useState<Status>("idle");
 
   const validate = (): boolean => {
-    const e: FormErrors = {};
-
-    if (!form.name.trim()) e.name = "Name is required";
-
-    if (!form.email.trim()) e.email = "Email is required";
-    else if (!EMAIL_RE.test(form.email))
-      e.email = "Enter a valid email address";
-
-    if (!form.message.trim()) e.message = "Message is required";
-
+    const e: Errors = {};
+    if (!form.name.trim()) e.name = "Add your name so I know who to reply to.";
+    if (!form.email.trim()) e.email = "Add an email address so I can reply.";
+    else if (!EMAIL_RE.test(form.email)) e.email = "This email address looks incomplete. Check it and try again.";
+    if (!form.message.trim()) e.message = "Write a short message about the role or project.";
     setErrors(e);
     return Object.keys(e).length === 0;
   };
 
-  const handleChange: React.ChangeEventHandler<
-    HTMLInputElement | HTMLTextAreaElement
-  > = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
+    setForm((f) => ({ ...f, [name]: value }));
+    if (errors[name as keyof Form]) setErrors((x) => ({ ...x, [name]: undefined }));
+  };
 
-    setForm((p) => ({ ...p, [name]: value }));
-
-    if (errors[name as keyof FormErrors]) {
-      setErrors((p) => ({ ...p, [name]: undefined }));
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validate()) return;
+    if (!formEnabled) {
+      const body = encodeURIComponent(`${form.message}\n\n${form.name}\n${form.email}`);
+      window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent("Hello from your portfolio")}&body=${body}`;
+      return;
+    }
+    setStatus("sending");
+    try {
+      await emailjs.send(
+        SERVICE!,
+        TEMPLATE!,
+        { name: form.name, email: form.email, message: form.message, time: new Date().toLocaleString() },
+        KEY!
+      );
+      setStatus("sent");
+      setForm({ name: "", email: "", message: "" });
+    } catch {
+      setStatus("error");
     }
   };
 
-  const handleSubmit = async (
-  e: React.FormEvent<HTMLFormElement>
-): Promise<void> => {
-  e.preventDefault();
-
-  if (!validate()) return;
-
-  await sendEmail(form, setStatus, setForm, setErrors);
-};
-
-  return (
-    <section id="contact" className="sec contact-bg" ref={ref}>
-      <div className="sec-inner">
-        <motion.p
-          className="sec-label"
-          initial={{ opacity: 0, x: -16 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.5 }}
-        >
-          Get In Touch
-        </motion.p>
-
-        <motion.h2
-          className="sec-title"
-          initial={{ opacity: 0, y: 24 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.65, delay: 0.1 }}
-        >
-          Let&apos;s Build Something<br />
-          <span className="gradient-text">Remarkable.</span>
-        </motion.h2>
-
-        <div className="ct-layout">
-          {/* Info column */}
-          <motion.div
-            className="ct-info"
-            initial={{ opacity: 0, x: -24 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.65, delay: 0.2 }}
-          >
-            <p className="ct-intro">
-              I&apos;m actively exploring new opportunities — high-impact
-              frontend roles, full-stack engineering, or building something from
-              scratch. Let&apos;s talk.
-            </p>
-
-            <div className="ct-links">
-            {LINKS.map((l) => {
-  const Icon = l.icon;
-
-  return (
-    <a
-      key={l.label}
-      href={l.href}
-      className="ct-link card"
-      {...(l.href.startsWith("http")
-        ? { target: "_blank", rel: "noopener noreferrer" }
-        : {})}
-    >
-      <span className="ct-link__icon">
-        <Icon size={20} />
-      </span>
-
-      <div className="ct-link__body">
-        <span className="ct-link__label">{l.label}</span>
-        <span className="ct-link__val">{l.display}</span>
-      </div>
-
-      <svg
-        className="ct-link__arr"
-        width="15"
-        height="15"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2.2"
-      >
-        <path d="M5 12h14M12 5l7 7-7 7" />
-      </svg>
-    </a>
+  const field = (id: keyof Form, label: string, type = "text") => (
+    <div className={`ct__field${errors[id] ? " has-error" : ""}`}>
+      <label htmlFor={`ct-${id}`}>{label}</label>
+      {id === "message" ? (
+        <textarea
+          id={`ct-${id}`}
+          name={id}
+          rows={5}
+          value={form[id]}
+          onChange={onChange}
+          aria-invalid={Boolean(errors[id])}
+          aria-describedby={errors[id] ? `ct-${id}-err` : undefined}
+        />
+      ) : (
+        <input
+          id={`ct-${id}`}
+          name={id}
+          type={type}
+          autoComplete={id === "email" ? "email" : "name"}
+          value={form[id]}
+          onChange={onChange}
+          aria-invalid={Boolean(errors[id])}
+          aria-describedby={errors[id] ? `ct-${id}-err` : undefined}
+        />
+      )}
+      {errors[id] && (
+        <p className="ct__error" id={`ct-${id}-err`}>
+          {errors[id]}
+        </p>
+      )}
+    </div>
   );
-})}
-            </div>
-          </motion.div>
 
-          {/* Form column */}
-          <motion.div
-            initial={{ opacity: 0, x: 24 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.65, delay: 0.28 }}
-          >
-            {status === "sent" ? (
-              <SuccessCard />
-            ) : (
-              <ContactForm
-                form={form}
-                errors={errors}
-                status={status}
-                onSubmit={handleSubmit}
-                onChange={handleChange}
-              />
-            )}
-          </motion.div>
+  return (
+    <section className="section contact" id="contact">
+      <div className="wrap ct">
+        <div className="ct__intro">
+          <h2 className="section-title">Let's talk</h2>
+          <p className="section-lede">
+            I'm open to full-stack and frontend roles, and to freelance builds like Navora. Tell me what you're
+            working on and I'll reply within two days.
+          </p>
+          <ul className="ct__links">
+            <li>
+              <a href={`mailto:${profile.email}`}>
+                <Mail aria-hidden="true" />
+                {profile.email}
+              </a>
+            </li>
+            <li>
+              <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">
+                <FaLinkedin aria-hidden="true" />
+                {profile.linkedinLabel}
+              </a>
+            </li>
+            <li>
+              <a href={profile.github} target="_blank" rel="noopener noreferrer">
+                <FaGithub aria-hidden="true" />
+                {profile.github.replace("https://", "")}
+              </a>
+            </li>
+          </ul>
         </div>
-      </div>
 
-      <style>{`
-        .contact-bg { background: linear-gradient(180deg,var(--black) 0%,var(--surface) 50%,var(--black) 100%); }
-        .ct-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
-        .ct-intro { font-size: 1.02rem; color: var(--muted); line-height: 1.82; margin-bottom: 34px; }
-        .ct-links { display: flex; flex-direction: column; gap: 12px; }
-        .ct-link { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: var(--r-md); transition: transform 0.25s var(--ease), border-color 0.25s, box-shadow 0.25s; }
-        .ct-link:hover { transform: translateX(6px); border-color: var(--teal); box-shadow: 0 8px 30px rgba(0,229,192,0.07); }
-        .ct-link__icon { font-size: 1.3rem; flex-shrink: 0; }
-        .ct-link__body { flex: 1; display: flex; flex-direction: column; gap: 2px; }
-        .ct-link__label { font-size: 0.72rem; color: var(--muted-2); text-transform: uppercase; letter-spacing: 0.09em; font-weight: 600; }
-        .ct-link__val { font-size: 0.88rem; color: var(--white); font-weight: 500; }
-        .ct-link__arr { color: var(--muted-2); transition: color 0.2s; flex-shrink: 0; }
-        .ct-link:hover .ct-link__arr { color: var(--teal); }
-        .ct-form { padding: 36px; display: flex; flex-direction: column; gap: 22px; }
-        .ct-field { display: flex; flex-direction: column; gap: 7px; }
-        .ct-label { font-size: 0.78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; }
-        .ct-input { padding: 14px 16px; border-radius: var(--r-md); background: var(--surface-3); border: 1px solid var(--border); color: var(--white); font-size: 0.93rem; outline: none; width: 100%; }
-        .ct-field--err .ct-input { border-color: #ff6b6b; }
-        .ct-textarea { resize: vertical; min-height: 110px; }
-        .ct-err { font-size: 0.77rem; color: #ff6b6b; font-weight: 500; }
-        .ct-submit { width: 100%; justify-content: center; }
-        .ct-spinner { width: 15px; height: 15px; border: 2px solid rgba(0,0,0,0.3); border-top-color: var(--black); border-radius: 50%; animation: spin 0.65s linear infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .ct-success { padding: 60px 36px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; }
-        .ct-success__icon { font-size: 3rem; }
-        .ct-success__title { font-size: 1.5rem; font-weight: 800; color: var(--white); }
-        .ct-success__body { font-size: 0.95rem; color: var(--muted); }
-        @media (max-width: 800px) {
-          .ct-layout { grid-template-columns: 1fr; gap: 40px; }
-          .ct-form { padding: 26px 22px; }
-        }
-      `}</style>
+        {status === "sent" ? (
+          <div className="ct__done" role="status">
+            <span className="ct__done-icon">
+              <Check aria-hidden="true" />
+            </span>
+            <h3>Message sent</h3>
+            <p>Thanks for writing. I'll get back to you at the address you gave.</p>
+            <button type="button" className="btn btn-line" onClick={() => setStatus("idle")}>
+              Send another message
+            </button>
+          </div>
+        ) : (
+          <form className="ct__form" onSubmit={onSubmit} noValidate>
+            {field("name", "Name")}
+            {field("email", "Email", "email")}
+            {field("message", "Message")}
+            {status === "error" && (
+              <p className="ct__error" role="alert">
+                The message didn't send. Check your connection and try again, or email{" "}
+                <a href={`mailto:${profile.email}`}>{profile.email}</a> directly.
+              </p>
+            )}
+            <button type="submit" className="btn btn-solid ct__submit" disabled={status === "sending"}>
+              {status === "sending" ? "Sending…" : formEnabled ? "Send message" : "Open in my email app"}
+            </button>
+          </form>
+        )}
+      </div>
     </section>
   );
 };

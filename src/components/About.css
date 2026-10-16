@@ -1,0 +1,48 @@
+.about {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.5fr) minmax(0, 0.9fr);
+  gap: 32px clamp(32px, 5vw, 64px);
+  align-items: start;
+}
+.about__body p {
+  color: var(--ink-2);
+  margin-bottom: 16px;
+  max-width: 62ch;
+}
+.about__body .about__edu {
+  color: var(--ink-3);
+  font-size: 0.93rem;
+}
+.about__facts {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+.about__fact {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+.about__fact dd {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+}
+.about__fact dt {
+  color: var(--ink-2);
+  font-size: 0.9rem;
+}
+@media (max-width: 960px) {
+  .about {
+    grid-template-columns: 1fr;
+  }
+  .about__facts {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 24px;
+  }
+}

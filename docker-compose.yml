@@ -1,0 +1,13 @@
+# docker compose up --build   →  http://localhost:8080
+services:
+  portfolio:
+    build:
+      context: .
+      args:
+        VITE_EMAIL_SERVICE_ID: ${VITE_EMAIL_SERVICE_ID:-}
+        VITE_EMAIL_TEMPLATE_ID: ${VITE_EMAIL_TEMPLATE_ID:-}
+        VITE_EMAIL_PUBLIC_KEY: ${VITE_EMAIL_PUBLIC_KEY:-}
+    image: navi-portfolio:latest
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
